@@ -2988,9 +2988,6 @@ void SpellMgr::LoadDbcDataCorrections()
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetB[0] = 0;
                 break;
-            case 31224: // Cloak of Shadowes
-                spellInfo->EffectBasePoints[0] = 100;
-                break;
             case 8494: // Mana Shield (rank 2)
                 // because of bug in dbc
                 spellInfo->procChance = 0;

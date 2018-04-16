@@ -815,7 +815,7 @@ bool AuthSocket::_HandleRealmList()
     for (RealmList::RealmMap::const_iterator i = sRealmList->begin(); i != sRealmList->end(); ++i)
     {
         // don't work with realms which not compatible with the client
-        if ((_expversion & POST_BC_EXP_FLAG) && i->second.gamebuild != _build)
+        if ((_expversion & POST_BC_EXP_FLAG) && !AuthHelper::IsPostBCAcceptedClientBuild(i->second.gamebuild))
             continue;
         else if ((_expversion & PRE_BC_EXP_FLAG) && !AuthHelper::IsPreBCAcceptedClientBuild(i->second.gamebuild))
             continue;

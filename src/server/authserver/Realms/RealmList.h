@@ -19,6 +19,15 @@ struct Realm
     uint32 gamebuild;
 };
 
+struct RealmBuildInfo
+{
+    uint32 Build;
+    uint32 MajorVersion;
+    uint32 MinorVersion;
+    uint32 BugfixVersion;
+    uint32 HotfixVersion;
+};
+
 /// Storage object for the list of realms on the server
 class RealmList
 {

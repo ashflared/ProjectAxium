@@ -25921,7 +25921,7 @@ void Player::TransmogrifyItem(uint32 itemId)
     if (!CheckItem(vItemTemplate, pItemTemplate))
         return;
 
-    if (!sObjectMgr->CheckExtendedCost2(this, vItemTemplate))
+    if (GetSession()->GetSecurity() <= SEC_PLAYER && !sObjectMgr->CheckExtendedCost2(this, vItemTemplate))
     {
         SendSysMessage("%s requires %s.", vItemTemplate->Name1.c_str(), sObjectMgr->CreateExtendedCost2ErrorMessage(vItemTemplate->ExtendedCost2).c_str());
         return;
@@ -26002,6 +26002,7 @@ void Player::_SaveTransmogItems()
     transmogItemsSaveQueue.clear();
 }
 
+/*
 void Player::_LoadTransmogSets()
 {
     QueryResult transmogSetsResult = CharacterDatabase.PQuery("SELECT MAX(setId) FROM character_transmog_sets WHERE guid = '%u'", GetGUIDLow());
@@ -26035,6 +26036,7 @@ void Player::_SaveTransmogSets()
         for (TransmogSetItemMap::iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
             CharacterDatabase.PQuery("REPLACE INTO character_transmog_sets (guid, setId, sort, itemId) VALUES ('%u', '%u', '%u', '%u')", GetGUIDLow(), itr->first, itr2->first, itr2->second);
 }
+*/
 
 bool Player::IsDamageSpec() const
 {

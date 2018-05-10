@@ -251,6 +251,8 @@ void Transmogrifier::SelectIndividualTransmog(Player* player, Creature* creature
     size_t countPos = data.wpos();
     data << uint8(count);
 
+    int playerSecurity = player->GetSession()->GetSecurity();
+
     for (uint16 slot = 0; slot < itemCount; ++slot)
     {
         if (const VendorItem* vItem = items->GetItemByVendorSlot(slot))
@@ -261,7 +263,7 @@ void Transmogrifier::SelectIndividualTransmog(Player* player, Creature* creature
                     continue;
 
                 int32 leftInStock = 0xFFFFFFFF; // The item will appear normally
-                if (!sObjectMgr->CheckExtendedCost2(player, vItemTemplate))
+                if (playerSecurity <= SEC_PLAYER && !sObjectMgr->CheckExtendedCost2(player, vItemTemplate))
                     leftInStock = 0; // The item will appear greyed out
 
                 data << uint32(slot + 1);                       // Client expects counting to start at 1

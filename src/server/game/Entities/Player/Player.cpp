@@ -698,6 +698,8 @@ void ModelOverride::SetDisplayId(uint32 displayId)
 
     m_player->SetNativeDisplayId(m_displayId);
     m_player->RestoreDisplayId();
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetRace(uint8 race)
@@ -716,6 +718,8 @@ void ModelOverride::SetRace(uint8 race)
 
     m_player->SetNativeDisplayId(m_displayId);
     m_player->RestoreDisplayId();
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetGender(uint8 gender)
@@ -734,6 +738,8 @@ void ModelOverride::SetGender(uint8 gender)
 
     m_player->SetNativeDisplayId(m_displayId);
     m_player->RestoreDisplayId();
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetSkin(uint8 skin)
@@ -742,6 +748,8 @@ void ModelOverride::SetSkin(uint8 skin)
     m_overrided = true;
     m_needsUpdate = true;
     SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES);
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetFace(uint8 face)
@@ -749,6 +757,8 @@ void ModelOverride::SetFace(uint8 face)
     m_face = face;
     m_overrided = true;
     SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES);
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetHairStyle(uint8 hairStyle)
@@ -756,6 +766,8 @@ void ModelOverride::SetHairStyle(uint8 hairStyle)
     m_hairStyle = hairStyle;
     m_overrided = true;
     SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES);
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetHairColor(uint8 hairColor)
@@ -763,6 +775,8 @@ void ModelOverride::SetHairColor(uint8 hairColor)
     m_hairColor = hairColor;
     m_overrided = true;
     SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES);
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 void ModelOverride::SetFacialFeature(uint8 facialFeature)
@@ -770,6 +784,8 @@ void ModelOverride::SetFacialFeature(uint8 facialFeature)
     m_facialFeature = facialFeature;
     m_overrided = true;
     SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES2);
+
+    m_player->m_modelOverrideNeedsSave = true;
 }
 
 WorldPacket ModelOverride::BuildOverridePacket()
@@ -2110,6 +2126,24 @@ bool Player::BuildEnumData(PreparedQueryResult result, WorldPacket* data)
     uint8 plrRace = fields[2].GetUInt8();
     uint8 plrClass = fields[3].GetUInt8();
     uint8 gender = fields[4].GetUInt8();
+    uint32 playerBytes = fields[5].GetUInt32();
+    uint32 playerBytes2 = fields[6].GetUInt32();
+    
+    /*
+    if (QueryResult qr = CharacterDatabase.PQuery("SELECT displayId, race, gender, skin, face, hairStyle, hairColor, facialFeature FROM character_modeloverride WHERE guid = %u", guid))
+    {
+        Field* f = qr->Fetch();
+
+        if (fields[0].GetUInt32())
+        {
+            plrRace = fields[1].GetUInt8();
+            gender = fields[2].GetUInt8();
+            playerBytes = fields[3].GetUInt8() | (fields[4].GetUInt8() << 8) | (fields[5].GetUInt8() << 16) | (fields[6].GetUInt8() << 24);
+            playerBytes2 &= ~0xFF;
+            playerBytes2 |= fields[7].GetUInt8();
+        }
+    }
+    */
 
     PlayerInfo const* info = sObjectMgr->GetPlayerInfo(plrRace, plrClass);
     if (!info)
@@ -2129,13 +2163,11 @@ bool Player::BuildEnumData(PreparedQueryResult result, WorldPacket* data)
     *data << uint8(plrClass);                               // class
     *data << uint8(gender);                                 // gender
 
-    uint32 playerBytes = fields[5].GetUInt32();
     *data << uint8(playerBytes);                            // skin
     *data << uint8(playerBytes >> 8);                       // face
     *data << uint8(playerBytes >> 16);                      // hair style
     *data << uint8(playerBytes >> 24);                      // hair color
 
-    uint32 playerBytes2 = fields[6].GetUInt32();
     *data << uint8(playerBytes2 & 0xFF);                    // facial hair
 
     *data << uint8(fields[7].GetUInt8());                   // level
@@ -17517,10 +17549,10 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
 
     _LoadEquipmentSets(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADEQUIPMENTSETS));
 
-    m_modelOverride = new ModelOverride(this);
-    m_cachedModelsForPlayer[GetGUID()].insert(m_modelOverride->GetDisplayId());
+    _LoadModelOverride();
+    m_cachedModelsForPlayer[GetGUIDLow()].insert(m_modelOverride->m_displayId);
 
-    _LoadTransmogSets();
+    //_LoadTransmogSets();
 
     m_vip = fields[68].GetBool();
 
@@ -19165,8 +19197,9 @@ void Player::SaveToDB(bool create /*=false*/)
     if (m_session->isLogingOut() || !sWorld->getBoolConfig(CONFIG_STATS_SAVE_ONLY_ON_LOGOUT))
         _SaveStats(trans);
 
+    _SaveModelOverride();
     _SaveTransmogItems();
-    _SaveTransmogSets();
+    //_SaveTransmogSets();
 
     CharacterDatabase.CommitTransaction(trans);
 
@@ -22067,7 +22100,7 @@ void Player::UpdateVisibilityOf(WorldObject* target)
 
             if (Player* pTarget = target->ToPlayer())
             {
-                std::unordered_set<uint32>* cachedModels = &m_cachedModelsForPlayer[pTarget->GetGUID()];
+                std::unordered_set<uint32>* cachedModels = &m_cachedModelsForPlayer[pTarget->GetGUIDLow()];
                 uint32 displayId = pTarget->GetModelOverride()->GetDisplayId();
                 cachedModels->insert(displayId);
 
@@ -22145,7 +22178,7 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
 
             if (Player* pTarget = target->ToPlayer())
             {
-                std::unordered_set<uint32>* cachedModels = &m_cachedModelsForPlayer[pTarget->GetGUID()];
+                std::unordered_set<uint32>* cachedModels = &m_cachedModelsForPlayer[pTarget->GetGUIDLow()];
                 uint32 displayId = pTarget->GetModelOverride()->GetDisplayId();
                 cachedModels->insert(displayId);
 
@@ -25829,10 +25862,10 @@ void Player::InterruptMovement()
     SendMessageToSet(&data, true);
 }
 
-void Player::ForceUpdateFieldValues()
+WorldPacket Player::BuildUpdateFieldValues()
 {
     if (!IsInWorld())
-        return;
+        return WorldPacket();
 
     ByteBuffer buf(500);
     buf << (uint8)UPDATETYPE_VALUES;
@@ -25854,6 +25887,21 @@ void Player::ForceUpdateFieldValues()
     for (uint16 index = 0; index < valuesCount; ++index)
         buf << uint32Values[index];
 
+    UpdateData data;
+    data.AddUpdateBlock(buf);
+    WorldPacket packet;
+    data.BuildPacket(&packet);
+
+    return packet;
+}
+
+void Player::ForceUpdateFieldValues(uint32 delayMs)
+{
+    if (!IsInWorld())
+        return;
+
+    WorldPacket packet = BuildUpdateFieldValues();
+
     std::vector<Player*> players;
     CellCoord c = Axium::ComputeCellCoord(GetPositionX(), GetPositionY());
     Cell cell(c);
@@ -25862,13 +25910,50 @@ void Player::ForceUpdateFieldValues()
     TypeContainerVisitor<Axium::PlayerUpdateNotifier, WorldTypeMapContainer> player_notifier(notifier);
     cell.Visit(c, player_notifier, *this->GetMap(), *this, GetVisibilityRange());
 
-    UpdateData data;
-    data.AddUpdateBlock(buf);
-    WorldPacket packet;
-    data.BuildPacket(&packet);
-
     for (Player* p : players)
-        p->GetSession()->SendPacket(&packet);
+        sDelayedPacketMgr->Queue(p->GetSession(), packet, delayMs);
+}
+
+void Player::_LoadModelOverride()
+{
+    m_modelOverride = new ModelOverride(this);
+
+    QueryResult result = CharacterDatabase.PQuery("SELECT displayId, race, gender, skin, face, hairStyle, hairColor, facialFeature FROM character_modeloverride WHERE guid = %u", GetGUIDLow());
+    if (!result)
+        return;
+
+    Field* fields = result->Fetch();
+
+    if (!fields[0].GetUInt32())
+        return;
+
+    m_modelOverride->SetDisplayId(fields[0].GetUInt32());
+    m_modelOverride->SetRace(fields[1].GetUInt8());
+    m_modelOverride->SetGender(fields[2].GetUInt8());
+    m_modelOverride->SetSkin(fields[3].GetUInt8());
+    m_modelOverride->SetFace(fields[4].GetUInt8());
+    m_modelOverride->SetHairStyle(fields[5].GetUInt8());
+    m_modelOverride->SetHairColor(fields[6].GetUInt8());
+    m_modelOverride->SetFacialFeature(fields[7].GetUInt8());
+}
+
+void Player::_SaveModelOverride()
+{
+    if (!m_modelOverrideNeedsSave)
+        return;
+
+    CharacterDatabase.PExecute("REPLACE INTO character_modeloverride VALUES (%u, %u, %u, %u, %u, %u, %u, %u, %u)",
+        GetGUIDLow(),
+        m_modelOverride->m_displayId,
+        m_modelOverride->m_race,
+        m_modelOverride->m_gender,
+        m_modelOverride->m_skin,
+        m_modelOverride->m_face,
+        m_modelOverride->m_hairStyle,
+        m_modelOverride->m_hairColor,
+        m_modelOverride->m_facialFeature);
+
+    m_modelOverrideNeedsSave = false;
 }
 
 bool Player::CheckItem(const ItemTemplate* vItemTemplate, const ItemTemplate* pItemTemplate)

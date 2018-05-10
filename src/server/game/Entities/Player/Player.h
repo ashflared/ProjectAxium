@@ -1204,7 +1204,7 @@ const std::unordered_map<uint8, const RaceGenderCustomizationLimits> RaceGenderL
 
 struct ModelInformation
 {
-    protected:
+    public:
         ModelInformation() :
             m_displayId(0),
             m_race(0),
@@ -2785,12 +2785,14 @@ class Player : public Unit, public GridObject<Player>
         bool IsMovementBlocked() const { return blockedMovement; }
         void SetMovementBlocked(bool x) { blockedMovement = x; }
 
-        void ForceUpdateFieldValues();
+        WorldPacket BuildUpdateFieldValues();
+        void ForceUpdateFieldValues(uint32 delayMs = 0);
 
         ModelOverride* GetModelOverride() { return m_modelOverride; }
         void SetModelOverride(ModelOverride* mo) { m_modelOverride = mo; }
         typedef std::unordered_map<uint64, std::unordered_set<uint32>> CachedModelsForPlayer;
         CachedModelsForPlayer m_cachedModelsForPlayer;
+        bool m_modelOverrideNeedsSave;
 
         bool CheckItem(const ItemTemplate* vItemTemplate, const ItemTemplate* pItemTemplate);
         void TransmogrifyItem(uint32 itemId);
@@ -2978,6 +2980,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
         void _LoadInstanceTimeRestrictions(PreparedQueryResult result);
+        void _LoadModelOverride();
         void _LoadTransmogSets();
 
         /*********************************************************/
@@ -3000,6 +3003,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveTalents(SQLTransaction& trans);
         void _SaveStats(SQLTransaction& trans);
         void _SaveInstanceTimeRestrictions(SQLTransaction& trans);
+        void _SaveModelOverride();
         void _SaveTransmogItems();
         void _SaveTransmogSets();
 

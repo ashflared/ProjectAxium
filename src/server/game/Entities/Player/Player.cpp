@@ -1307,13 +1307,6 @@ bool Player::Create(uint32 guidlow, CharacterCreateInfo* createInfo)
     m_arenaPointsCap = sWorld->getIntConfig(CONFIG_ARENA_POINTS_CAP_MINIMUM_CAP);
     SetHonorPoints(sWorld->getIntConfig(CONFIG_START_HONOR_POINTS));
 
-    // start with every map explored
-    if (sWorld->getBoolConfig(CONFIG_START_ALL_EXPLORED))
-    {
-        for (uint8 i = 0; i<PLAYER_EXPLORED_ZONES_SIZE; i++)
-            SetFlag(PLAYER_EXPLORED_ZONES_1+i, 0xFFFFFFFF);
-    }
-
     //Reputations if "StartAllReputation" is enabled, -- TODO: Fix this in a better way
     if (sWorld->getBoolConfig(CONFIG_START_ALL_REP))
     {

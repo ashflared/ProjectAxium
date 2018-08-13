@@ -434,15 +434,6 @@ void MapManager::LoadDbcDataCorrections()
         mapInfo = (MapEntry*)sMapStore.LookupEntry(i);
         if (!mapInfo)
             continue;
-
-        switch (mapInfo->MapID)
-        {
-            case 558: // Auchindoun: Auchenai Crypts
-                mapInfo->map_type = 0;
-                break;
-            default:
-                break;
-        }
     }
 
     AreaTableEntry* areaInfo = NULL;
@@ -454,27 +445,8 @@ void MapManager::LoadDbcDataCorrections()
 
         switch (areaInfo->mapid)
         {
-            case 558: // Auchindoun: Auchenai Crypts
             case 609: // Ebon Hold
                 areaInfo->flags |= AREA_FLAG_SANCTUARY;
-                break;
-            default:
-                break;
-        }
-
-        switch (areaInfo->zone)
-        {
-            case 495: // Howling Fjord
-                areaInfo->flags = (AREA_FLAG_ALLOW_DUELS | AREA_FLAG_SANCTUARY);
-                break;
-            default:
-                break;
-        }
-
-        switch (areaInfo->ID)
-        {
-            case 495: // Howling Fjord
-                areaInfo->flags = (AREA_FLAG_ALLOW_DUELS | AREA_FLAG_SANCTUARY);
                 break;
             default:
                 break;

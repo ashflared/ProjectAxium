@@ -1232,14 +1232,6 @@ bool Player::Create(uint32 guidlow, CharacterCreateInfo* createInfo)
 
     SetMap(sMapMgr->CreateMap(info->mapId, this));
 
-    // Mall Entrance
-    WorldLocation loc;
-    loc.m_mapId = 558;
-    loc.m_positionX = 72.5f;
-    loc.m_positionY = -163.0f;
-    loc.m_positionZ = 15.5f;
-    SetHomebind(loc, 3790);
-
     uint8 powertype = cEntry->powerType;
 
     SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, DEFAULT_WORLD_OBJECT_SIZE);
@@ -17662,10 +17654,6 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
     if (!GetItemCount(6948, true))
         StoreNewItemInBestSlots(6948, 1);
 
-    // Player Handbook
-    if (!GetItemCount(34838, true))
-        StoreNewItemInBestSlots(34838, 1);
-
     // Master Totem
     if (getClass() == CLASS_SHAMAN)
         if (!GetItemCount(5175, true))
@@ -26200,18 +26188,6 @@ bool Player::CanAppearToTarget(Player* target)
                 return false;
             }
 
-            if (IsInStranglethornVale())
-            {
-                SendSysMessage("You can't appear while in Stranglethorn Vale.");
-                return false;
-            }
-
-            if (target->IsInStranglethornVale())
-            {
-                SendSysMessage("You can't appear to players in Stranglethorn Vale.");
-                return false;
-            }
-
             if (target->GetMap()->IsDungeon() || target->GetMap()->IsRaid())
             {
                 SendSysMessage("You can't appear to players in dungeons or raids.");
@@ -26300,12 +26276,6 @@ bool Player::CanTeleportTo(const GameTele* tele)
             if (InBattleground() || InArena())
             {
                 SendSysMessage("You can't teleport while in a battleground or arena.");
-                return false;
-            }
-
-            if (IsInStranglethornVale())
-            {
-                SendSysMessage("You can't teleport while in Stranglethorn Vale.");
                 return false;
             }
 

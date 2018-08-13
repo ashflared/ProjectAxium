@@ -827,12 +827,6 @@ class WorldObject : public Object, public WorldLocation
 
         MovementInfo m_movementInfo;
 
-        bool IsInMall() const { return GetMapId() == 558; }
-        bool IsInDuelingZone() const { return GetMapId() == 571 && GetZoneId() == 495 && (GetAreaId() == 3987 || GetAreaId() == 3988 || GetAreaId() == 4226); }
-        bool IsInStranglethornVale() const { return GetMapId() == 0 && GetZoneId() == 33; }
-        bool IsInGurubashiArena() const { return GetMapId() == 0 && GetZoneId() == 33 && GetAreaId() == 1741; }
-        bool IsInGurubashiBattleRing() const { return GetMapId() == 0 && GetZoneId() == 33 && GetAreaId() == 2177; }
-
     protected:
         std::string m_name;
         bool m_isActive;

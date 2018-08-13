@@ -1732,33 +1732,6 @@ bool WorldObject::CanDetect(WorldObject const* obj, bool ignoreStealth) const
     if (obj->IsAlwaysDetectableFor(seer))
         return true;
 
-    if (obj->IsInMall())
-    {
-        // Players
-        if (const Player* player = obj->ToPlayer())
-            return false;
-
-        // Charmed or Owned Units
-        if (const Unit* unit = obj->ToUnit())
-            if (uint64 guid = unit->GetCharmerOrOwnerGUID())
-                if (guid != seer->GetGUID())
-                    return false;
-
-        // Owned Game Objects
-        if (const GameObject* gObj = obj->ToGameObject())
-            if (uint64 guid = gObj->GetOwnerGUID())
-                if (guid != seer->GetGUID())
-                    return false;
-
-        // Dynamic Objects
-        if (const DynamicObject* dynObj = obj->ToDynamicObject())
-            return false;
-    }
-    else if (obj->IsInStranglethornVale())
-        if (const Unit* unit = obj->ToUnit())
-            if (unit->HasAura(SPELL_GURUBASHI_BANISH))
-                return false;
-
     if (const Player* pObj = obj->ToPlayer())
         if (pObj->IsArenaSpectator())
             return false;

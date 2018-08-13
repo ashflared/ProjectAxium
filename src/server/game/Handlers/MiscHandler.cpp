@@ -57,29 +57,7 @@ void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
         _player->KillPlayer();
     }
 
-    if (_player->IsInMall())
-    {
-        _player->RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);
-        _player->ResurrectPlayer(1.0f);
-        _player->SaveToDB();
-        _player->TeleportTo(558, 72.5f, -163.0f, 15.5f, 3.1f);
-    }
-    else if (_player->IsInDuelingZone())
-    {
-        _player->RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);
-        _player->ResurrectPlayer(1.0f);
-        _player->SaveToDB();
-        _player->TeleportTo(571, 524.0f, -3237.0f, 27.5f, 3.3f);
-    }
-    else if (_player->IsInStranglethornVale())
-    {
-        _player->RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);
-        _player->ResurrectPlayer(1.0f);
-        _player->SaveToDB();
-        _player->AddAura(SPELL_GURUBASHI_BANISH, _player);
-        _player->TeleportTo(0, -13315.0f, 80.0f, 22.15f, 1.0f);
-    }
-    else if (_player->InBattleground() || _player->InArena())
+    if (_player->InBattleground() || _player->InArena())
     {
         _player->RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);
         _player->BuildPlayerRepop();

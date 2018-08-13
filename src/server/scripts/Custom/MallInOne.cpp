@@ -8,7 +8,7 @@ bool MallInOne::OnGossipHello(Player* player, Creature* creature)
 
     player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_crate_01:30|t General Goods", GOSSIP_SENDER_MAIN, MALL_MENU_GENERAL_GOODS);
     player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\ability_warrior_improveddisciplines:30|t Gear", GOSSIP_SENDER_MAIN, MALL_MENU_GEAR);
-    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_gizmo_gnomishflameturret:30|t Professions", GOSSIP_SENDER_MAIN, MALL_MENU_PROFESSIONS);
+    // player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_gizmo_gnomishflameturret:30|t Professions", GOSSIP_SENDER_MAIN, MALL_MENU_PROFESSIONS);
     player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_rod_enchantedadamantite:30|t Enchants", GOSSIP_SENDER_MAIN, MALL_MENU_ENCHANTS);
     player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_jewelcrafting_pyrestone_02:30|t Gems", GOSSIP_SENDER_MAIN, MALL_MENU_GEMS);
     player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\ability_mount_bigblizzardbear:30|t Mounts", GOSSIP_SENDER_MAIN, MALL_MENU_MOUNTS);
@@ -39,7 +39,7 @@ bool MallInOne::OnGossipHello(Player* player, Creature* creature)
     return true;
 }
 
-bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender, uint32 action)
+bool MallInOne::OnGossipSelect(Player *player, Creature *creature, uint32 sender, uint32 action)
 {
     player->PlayerTalkClass->ClearMenus();
 
@@ -49,22 +49,54 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case GOSSIP_SENDER_MAIN:            OnGossipHello(player, creature);                               break;
-                case MALL_MENU_GENERAL_GOODS:       ShowInventory(player, creature, INVENTORY_LIST_GENERAL_GOODS); break;
-                case MALL_MENU_GEAR:                HandleGear(player, creature, MALL_MENU_GEAR);                  break;
-                case MALL_MENU_PROFESSIONS:         HandleProfessions(player, creature);                           break;
-                case MALL_MENU_ENCHANTS:            HandleEnchants(player, creature, MALL_MENU_ENCHANTS);          break;
-                case MALL_MENU_GEMS:                ShowInventory(player, creature, INVENTORY_LIST_GEMS);          break;
-                case MALL_MENU_MOUNTS:              ShowInventory(player, creature, INVENTORY_LIST_MOUNTS);        break;
-                case MALL_MENU_GLYPHS:              ShowInventory(player, creature, INVENTORY_LIST_GLYPHS);        break;
-                case MALL_MENU_GUILD:               HandleGuild(player, creature, MALL_MENU_GUILD);                break;
-                case MALL_MENU_PETS:                ShowPets(player, creature, MALL_MENU_PETS);                    break;
-                case MALL_MENU_STABLE:              HandleStable(player, creature);                                break;
-                case MALL_MENU_SETUP_SHADOW_DANCE:  HandleSetupShadowDanceBar(player, creature);                   break;
-                case MALL_MENU_FINISH_SHADOW_DANCE: HandleFinishShadowDanceBar(player, creature);                  break;
-                case MALL_MENU_LEARN_DUAL_SPEC:     HandleLearnDualSpecialization(player, creature);               break;
-                case MALL_MENU_RESET_TALENTS:       HandleResetTalents(player, creature);                          break;
-                case MALL_MENU_RESET_PET_TALENTS:   HandleResetPetTalents(player);                                 break;
+                case GOSSIP_SENDER_MAIN:
+                    OnGossipHello(player, creature);
+                    break;
+                case MALL_MENU_GENERAL_GOODS:
+                    ShowInventory(player, creature, INVENTORY_LIST_GENERAL_GOODS);
+                    break;
+                case MALL_MENU_GEAR:
+                    HandleGear(player, creature, MALL_MENU_GEAR);
+                    break;
+                case MALL_MENU_PROFESSIONS:
+                    HandleProfessions(player, creature);
+                    break;
+                case MALL_MENU_ENCHANTS:
+                    HandleEnchants(player, creature, MALL_MENU_ENCHANTS);
+                    break;
+                case MALL_MENU_GEMS:
+                    ShowInventory(player, creature, INVENTORY_LIST_GEMS);
+                    break;
+                case MALL_MENU_MOUNTS:
+                    ShowInventory(player, creature, INVENTORY_LIST_MOUNTS);
+                    break;
+                case MALL_MENU_GLYPHS:
+                    ShowInventory(player, creature, INVENTORY_LIST_GLYPHS);
+                    break;
+                case MALL_MENU_GUILD:
+                    HandleGuild(player, creature, MALL_MENU_GUILD);
+                    break;
+                case MALL_MENU_PETS:
+                    ShowPets(player, creature, MALL_MENU_PETS);
+                    break;
+                case MALL_MENU_STABLE:
+                    HandleStable(player, creature);
+                    break;
+                case MALL_MENU_SETUP_SHADOW_DANCE:
+                    HandleSetupShadowDanceBar(player, creature);
+                    break;
+                case MALL_MENU_FINISH_SHADOW_DANCE:
+                    HandleFinishShadowDanceBar(player, creature);
+                    break;
+                case MALL_MENU_LEARN_DUAL_SPEC:
+                    HandleLearnDualSpecialization(player, creature);
+                    break;
+                case MALL_MENU_RESET_TALENTS:
+                    HandleResetTalents(player, creature);
+                    break;
+                case MALL_MENU_RESET_PET_TALENTS:
+                    HandleResetPetTalents(player);
+                    break;
             }
             break;
         }
@@ -72,11 +104,21 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case MALL_GEAR_RELENTLESS_GLADIATOR:  HandleGear(player, creature, MALL_GEAR_RELENTLESS_GLADIATOR);  break;
-                case MALL_GEAR_TRIAL_OF_THE_CRUSADER: HandleGear(player, creature, MALL_GEAR_TRIAL_OF_THE_CRUSADER); break;
-                case MALL_GEAR_WRATHFUL_GLADIATOR:    HandleGear(player, creature, MALL_GEAR_WRATHFUL_GLADIATOR);    break;
-                case MALL_GEAR_ICECROWN_CITADEL:      HandleGear(player, creature, MALL_GEAR_ICECROWN_CITADEL);      break;
-                case MALL_GEAR_APPAREL:               HandleGear(player, creature, MALL_GEAR_APPAREL);               break;
+                case MALL_GEAR_RELENTLESS_GLADIATOR:
+                    HandleGear(player, creature, MALL_GEAR_RELENTLESS_GLADIATOR);
+                    break;
+                case MALL_GEAR_TRIAL_OF_THE_CRUSADER:
+                    HandleGear(player, creature, MALL_GEAR_TRIAL_OF_THE_CRUSADER);
+                    break;
+                case MALL_GEAR_WRATHFUL_GLADIATOR:
+                    HandleGear(player, creature, MALL_GEAR_WRATHFUL_GLADIATOR);
+                    break;
+                case MALL_GEAR_ICECROWN_CITADEL:
+                    HandleGear(player, creature, MALL_GEAR_ICECROWN_CITADEL);
+                    break;
+                case MALL_GEAR_APPAREL:
+                    HandleGear(player, creature, MALL_GEAR_APPAREL);
+                    break;
             }
             break;
         }
@@ -94,10 +136,18 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case GEAR_OPTION_MAINSETS_AND_OFFSETS: ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_MAINSETS_AND_OFFSETS); break;
-                case GEAR_OPTION_ACCESSORIES:          ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_ACCESSORIES);          break;
-                case GEAR_OPTION_WEAPONS:              ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_WEAPONS);              break;
-                case GEAR_OPTION_TRINKETS:             ShowInventory(player, creature, INVENTORY_LIST_245_TRINKETS);                              break;
+                case GEAR_OPTION_MAINSETS_AND_OFFSETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_MAINSETS_AND_OFFSETS);
+                    break;
+                case GEAR_OPTION_ACCESSORIES:
+                    ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_ACCESSORIES);
+                    break;
+                case GEAR_OPTION_WEAPONS:
+                    ShowInventory(player, creature, INVENTORY_LIST_RELENTLESS_GLADIATOR_WEAPONS);
+                    break;
+                case GEAR_OPTION_TRINKETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_245_TRINKETS);
+                    break;
             }
             break;
         }
@@ -105,14 +155,30 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case GEAR_OPTION_MAINSETS_AND_OFFSETS: SelectArmorType(player, creature, sender);                                                          break;
-                case GEAR_OPTION_CLOTH:                ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_CLOTH);   break;
-                case GEAR_OPTION_LEATHER:              ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_LEATHER); break;
-                case GEAR_OPTION_MAIL:                 ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_MAIL);    break;
-                case GEAR_OPTION_PLATE:                ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_PLATE);   break;
-                case GEAR_OPTION_ACCESSORIES:          ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_ACCESSORIES);                  break;
-                case GEAR_OPTION_WEAPONS:              ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_WEAPONS);                      break;
-                case GEAR_OPTION_TRINKETS:             ShowInventory(player, creature, INVENTORY_LIST_245_TRINKETS);                                       break;
+                case GEAR_OPTION_MAINSETS_AND_OFFSETS:
+                    SelectArmorType(player, creature, sender);
+                    break;
+                case GEAR_OPTION_CLOTH:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_CLOTH);
+                    break;
+                case GEAR_OPTION_LEATHER:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_LEATHER);
+                    break;
+                case GEAR_OPTION_MAIL:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_MAIL);
+                    break;
+                case GEAR_OPTION_PLATE:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_MAINSETS_AND_OFFSETS_PLATE);
+                    break;
+                case GEAR_OPTION_ACCESSORIES:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_ACCESSORIES);
+                    break;
+                case GEAR_OPTION_WEAPONS:
+                    ShowInventory(player, creature, INVENTORY_LIST_TRIAL_OF_THE_CRUSADER_WEAPONS);
+                    break;
+                case GEAR_OPTION_TRINKETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_245_TRINKETS);
+                    break;
             }
             break;
         }
@@ -120,10 +186,18 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case GEAR_OPTION_MAINSETS_AND_OFFSETS: ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_MAINSETS_AND_OFFSETS); break;
-                case GEAR_OPTION_ACCESSORIES:          ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_ACCESSORIES);          break;
-                case GEAR_OPTION_WEAPONS:              ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_WEAPONS);              break;
-                case GEAR_OPTION_TRINKETS:             ShowInventory(player, creature, INVENTORY_LIST_264_TRINKETS);                            break;
+                case GEAR_OPTION_MAINSETS_AND_OFFSETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_MAINSETS_AND_OFFSETS);
+                    break;
+                case GEAR_OPTION_ACCESSORIES:
+                    ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_ACCESSORIES);
+                    break;
+                case GEAR_OPTION_WEAPONS:
+                    ShowInventory(player, creature, INVENTORY_LIST_WRATHFUL_GLADIATOR_WEAPONS);
+                    break;
+                case GEAR_OPTION_TRINKETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_264_TRINKETS);
+                    break;
             }
             break;
         }
@@ -131,14 +205,30 @@ bool MallInOne::OnGossipSelect(Player* player, Creature* creature, uint32 sender
         {
             switch (action)
             {
-                case GEAR_OPTION_MAINSETS_AND_OFFSETS: SelectArmorType(player, creature, sender);                                                     break;
-                case GEAR_OPTION_CLOTH:                ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_CLOTH);   break;
-                case GEAR_OPTION_LEATHER:              ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_LEATHER); break;
-                case GEAR_OPTION_MAIL:                 ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_MAIL);    break;
-                case GEAR_OPTION_PLATE:                ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_PLATE);   break;
-                case GEAR_OPTION_ACCESSORIES:          ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_ACCESSORIES);                  break;
-                case GEAR_OPTION_WEAPONS:              ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_WEAPONS);                      break;
-                case GEAR_OPTION_TRINKETS:             ShowInventory(player, creature, INVENTORY_LIST_264_TRINKETS);                                  break;
+                case GEAR_OPTION_MAINSETS_AND_OFFSETS:
+                    SelectArmorType(player, creature, sender);
+                    break;
+                case GEAR_OPTION_CLOTH:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_CLOTH);
+                    break;
+                case GEAR_OPTION_LEATHER:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_LEATHER);
+                    break;
+                case GEAR_OPTION_MAIL:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_MAIL);
+                    break;
+                case GEAR_OPTION_PLATE:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_MAINSETS_AND_OFFSETS_PLATE);
+                    break;
+                case GEAR_OPTION_ACCESSORIES:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_ACCESSORIES);
+                    break;
+                case GEAR_OPTION_WEAPONS:
+                    ShowInventory(player, creature, INVENTORY_LIST_ICECROWN_CITADEL_WEAPONS);
+                    break;
+                case GEAR_OPTION_TRINKETS:
+                    ShowInventory(player, creature, INVENTORY_LIST_264_TRINKETS);
+                    break;
             }
             break;
         }
@@ -188,10 +278,12 @@ bool MallInOne::HandleGear(Player* player, Creature* creature, uint32 gearOption
     {
         case MALL_MENU_GEAR:
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_helmet_147:30|t Relentless Gladiator", MALL_MENU_GEAR, MALL_GEAR_RELENTLESS_GLADIATOR);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_gauntlets_78a:30|t Trial of the Crusader", MALL_MENU_GEAR, MALL_GEAR_TRIAL_OF_THE_CRUSADER);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_helmet_147:30|t Season 7 PvP", MALL_MENU_GEAR, MALL_GEAR_RELENTLESS_GLADIATOR);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_gauntlets_78a:30|t Tier 9 PvE", MALL_MENU_GEAR, MALL_GEAR_TRIAL_OF_THE_CRUSADER);
+            /*
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_chest_cloth_83:30|t Wrathful Gladiator", MALL_MENU_GEAR, MALL_GEAR_WRATHFUL_GLADIATOR);
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_shoulder_116black:30|t Icecrown Citadel", MALL_MENU_GEAR, MALL_GEAR_ICECROWN_CITADEL);
+            */
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "|TInterface\\icons\\inv_shirt_12:30|t Apparel", MALL_MENU_GEAR, MALL_GEAR_APPAREL);
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TALK, "Back", GOSSIP_SENDER_MAIN, GOSSIP_SENDER_MAIN);
             player->SEND_GOSSIP_MENU(1, creature->GetGUID());
@@ -1648,7 +1740,7 @@ bool MallInOne::CheckEnchantItem(Player* player, const ItemTemplate* pItemTempla
                 pItemTemplate->SubClass != ITEM_SUBCLASS_ARMOR_PLATE)
                 return false;
 
-            if (pItemTemplate->InventoryType != INVTYPE_CHEST)
+            if (!(pItemTemplate->InventoryType == INVTYPE_CHEST || pItemTemplate->InventoryType == INVTYPE_ROBE))
                 return false;
 
             break;
@@ -1930,6 +2022,7 @@ bool MallInOne::CheckEnchantItem(Player* player, const ItemTemplate* pItemTempla
             if (pItemTemplate->InventoryType != INVTYPE_HEAD &&
                 pItemTemplate->InventoryType != INVTYPE_SHOULDERS &&
                 pItemTemplate->InventoryType != INVTYPE_CHEST &&
+                pItemTemplate->InventoryType != INVTYPE_ROBE &&
                 pItemTemplate->InventoryType != INVTYPE_HANDS &&
                 pItemTemplate->InventoryType != INVTYPE_LEGS &&
                 pItemTemplate->InventoryType != INVTYPE_WRISTS &&

@@ -18,6 +18,7 @@ class modeloverride_commandscript : public CommandScript
                 { "hairstyle",      SEC_VIP,            false,  &HandleHairStyleCommand,        "",     NULL },
                 { "haircolor",      SEC_VIP,            false,  &HandleHairColorCommand,        "",     NULL },
                 { "facialfeature",  SEC_VIP,            false,  &HandleFacialFeatureCommand,    "",     NULL },
+                { "refresh",        SEC_VIP,            false,  &HandleRefreshCommand,          "",     NULL },
                 { "restore",        SEC_VIP,            false,  &HandleRestoreCommand,          "",     NULL },
                 { "copy",           SEC_GAMEMASTER,     false,  &HandleCopyCommand,             "",     NULL },
                 { "send",           SEC_GAMEMASTER,     false,  &HandleSendCommand,             "",     NULL },
@@ -166,6 +167,18 @@ class modeloverride_commandscript : public CommandScript
                 return false;
 
             mo->SetFacialFeature(facialFeature);
+            return true;
+        }
+
+        static bool HandleRefreshCommand(ChatHandler* handler, const char* /*args*/)
+        {
+            Player* player = handler->GetSession()->GetPlayer();
+            if (!player)
+                return false;
+
+            player->GetModelOverride()->SetNeedsUpdate(ModelOverride::UPDATETYPE_DISPLAYID);
+            player->GetModelOverride()->SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES);
+            player->GetModelOverride()->SetNeedsUpdate(ModelOverride::UPDATETYPE_PLAYERBYTES2);
             return true;
         }
 

@@ -2113,7 +2113,7 @@ bool Player::BuildEnumData(PreparedQueryResult result, WorldPacket* data)
     uint8 gender = fields[4].GetUInt8();
     uint32 playerBytes = fields[5].GetUInt32();
     uint32 playerBytes2 = fields[6].GetUInt32();
-    
+
     /*
     if (QueryResult qr = CharacterDatabase.PQuery("SELECT displayId, race, gender, skin, face, hairStyle, hairColor, facialFeature FROM character_modeloverride WHERE guid = %u", guid))
     {
@@ -25920,7 +25920,7 @@ void Player::_LoadModelOverride()
 
 void Player::_SaveModelOverride()
 {
-    if (!m_modelOverrideNeedsSave)
+    if (!m_modelOverride || !m_modelOverrideNeedsSave)
         return;
 
     CharacterDatabase.PExecute("REPLACE INTO character_modeloverride VALUES (%u, %u, %u, %u, %u, %u, %u, %u, %u)",

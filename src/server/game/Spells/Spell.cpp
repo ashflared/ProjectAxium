@@ -1257,6 +1257,8 @@ void Spell::DoAllEffectOnTarget(TargetInfo* target)
             unit->RemoveAura(200000); // Object Visibility Update Timer (Stealth, At Apply)
             unit->RemoveAura(200001); // Object Visibility Update Timer (Stealth, At Remove)
         }
+
+        m_caster->SendSpellMiss(unit, m_spellInfo->Id, SPELL_MISS_EVADE);
         return;
     }
 

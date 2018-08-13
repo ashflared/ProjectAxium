@@ -688,77 +688,77 @@ class utility_commandscript : public CommandScript
 
             if (unitState & UNIT_STATE_DIED)
                 handler->PSendSysMessage("UNIT_STATE_DIED");
-            else if (unitState & UNIT_STATE_DIED)
+            if (unitState & UNIT_STATE_DIED)
                 handler->PSendSysMessage("UNIT_STATE_DIED");
-            else if (unitState & UNIT_STATE_MELEE_ATTACKING)
+            if (unitState & UNIT_STATE_MELEE_ATTACKING)
                 handler->PSendSysMessage("UNIT_STATE_MELEE_ATTACKING");
-            else if (unitState & UNIT_STATE_STUNNED)
+            if (unitState & UNIT_STATE_STUNNED)
                 handler->PSendSysMessage("UNIT_STATE_STUNNED");
-            else if (unitState & UNIT_STATE_ROAMING)
+            if (unitState & UNIT_STATE_ROAMING)
                 handler->PSendSysMessage("UNIT_STATE_ROAMING");
-            else if (unitState & UNIT_STATE_CHASE)
+            if (unitState & UNIT_STATE_CHASE)
                 handler->PSendSysMessage("UNIT_STATE_CHASE");
-            else if (unitState & UNIT_STATE_FLEEING)
+            if (unitState & UNIT_STATE_FLEEING)
                 handler->PSendSysMessage("UNIT_STATE_FLEEING");
-            else if (unitState & UNIT_STATE_IN_FLIGHT)
+            if (unitState & UNIT_STATE_IN_FLIGHT)
                 handler->PSendSysMessage("UNIT_STATE_IN_FLIGHT");
-            else if (unitState & UNIT_STATE_FOLLOW)
+            if (unitState & UNIT_STATE_FOLLOW)
                 handler->PSendSysMessage("UNIT_STATE_FOLLOW");
-            else if (unitState & UNIT_STATE_ROOT)
+            if (unitState & UNIT_STATE_ROOT)
                 handler->PSendSysMessage("UNIT_STATE_ROOT");
-            else if (unitState & UNIT_STATE_CONFUSED)
+            if (unitState & UNIT_STATE_CONFUSED)
                 handler->PSendSysMessage("UNIT_STATE_CONFUSED");
-            else if (unitState & UNIT_STATE_DISTRACTED)
+            if (unitState & UNIT_STATE_DISTRACTED)
                 handler->PSendSysMessage("UNIT_STATE_DISTRACTED");
-            else if (unitState & UNIT_STATE_ISOLATED)
+            if (unitState & UNIT_STATE_ISOLATED)
                 handler->PSendSysMessage("UNIT_STATE_ISOLATED");
-            else if (unitState & UNIT_STATE_ATTACK_PLAYER)
+            if (unitState & UNIT_STATE_ATTACK_PLAYER)
                 handler->PSendSysMessage("UNIT_STATE_ATTACK_PLAYER");
-            else if (unitState & UNIT_STATE_CASTING)
+            if (unitState & UNIT_STATE_CASTING)
                 handler->PSendSysMessage("UNIT_STATE_CASTING");
-            else if (unitState & UNIT_STATE_POSSESSED)
+            if (unitState & UNIT_STATE_POSSESSED)
                 handler->PSendSysMessage("UNIT_STATE_POSSESSED");
-            else if (unitState & UNIT_STATE_CHARGING)
+            if (unitState & UNIT_STATE_CHARGING)
                 handler->PSendSysMessage("UNIT_STATE_CHARGING");
-            else if (unitState & UNIT_STATE_JUMPING)
+            if (unitState & UNIT_STATE_JUMPING)
                 handler->PSendSysMessage("UNIT_STATE_JUMPING");
-            else if (unitState & UNIT_STATE_ONVEHICLE)
+            if (unitState & UNIT_STATE_ONVEHICLE)
                 handler->PSendSysMessage("UNIT_STATE_ONVEHICLE");
-            else if (unitState & UNIT_STATE_MOVE)
+            if (unitState & UNIT_STATE_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_MOVE");
-            else if (unitState & UNIT_STATE_ROTATING)
+            if (unitState & UNIT_STATE_ROTATING)
                 handler->PSendSysMessage("UNIT_STATE_ROTATING");
-            else if (unitState & UNIT_STATE_EVADE)
+            if (unitState & UNIT_STATE_EVADE)
                 handler->PSendSysMessage("UNIT_STATE_EVADE");
-            else if (unitState & UNIT_STATE_ROAMING_MOVE)
+            if (unitState & UNIT_STATE_ROAMING_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_ROAMING_MOVE");
-            else if (unitState & UNIT_STATE_CONFUSED_MOVE)
+            if (unitState & UNIT_STATE_CONFUSED_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_CONFUSED_MOVE");
-            else if (unitState & UNIT_STATE_FLEEING_MOVE)
+            if (unitState & UNIT_STATE_FLEEING_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_FLEEING_MOVE");
-            else if (unitState & UNIT_STATE_CHASE_MOVE)
+            if (unitState & UNIT_STATE_CHASE_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_CHASE_MOVE");
-            else if (unitState & UNIT_STATE_FOLLOW_MOVE)
+            if (unitState & UNIT_STATE_FOLLOW_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_FOLLOW_MOVE");
-            else if (unitState & UNIT_STATE_IGNORE_PATHFINDING)
+            if (unitState & UNIT_STATE_IGNORE_PATHFINDING)
                 handler->PSendSysMessage("UNIT_STATE_IGNORE_PATHFINDING");
-            else if (unitState & UNIT_STATE_UNATTACKABLE)
+            if (unitState & UNIT_STATE_UNATTACKABLE)
                 handler->PSendSysMessage("UNIT_STATE_UNATTACKABLE");
-            else if (unitState & UNIT_STATE_MOVING)
+            if (unitState & UNIT_STATE_MOVING)
                 handler->PSendSysMessage("UNIT_STATE_MOVING");
-            else if (unitState & UNIT_STATE_CONTROLLED)
+            if (unitState & UNIT_STATE_CONTROLLED)
                 handler->PSendSysMessage("UNIT_STATE_CONTROLLED");
-            else if (unitState & UNIT_STATE_LOST_CONTROL)
+            if (unitState & UNIT_STATE_LOST_CONTROL)
                 handler->PSendSysMessage("UNIT_STATE_LOST_CONTROL");
-            else if (unitState & UNIT_STATE_SIGHTLESS)
+            if (unitState & UNIT_STATE_SIGHTLESS)
                 handler->PSendSysMessage("UNIT_STATE_SIGHTLESS");
-            else if (unitState & UNIT_STATE_CANNOT_AUTOATTACK)
+            if (unitState & UNIT_STATE_CANNOT_AUTOATTACK)
                 handler->PSendSysMessage("UNIT_STATE_CANNOT_AUTOATTACK");
-            else if (unitState & UNIT_STATE_CANNOT_TURN)
+            if (unitState & UNIT_STATE_CANNOT_TURN)
                 handler->PSendSysMessage("UNIT_STATE_CANNOT_TURN");
-            else if (unitState & UNIT_STATE_NOT_MOVE)
+            if (unitState & UNIT_STATE_NOT_MOVE)
                 handler->PSendSysMessage("UNIT_STATE_NOT_MOVE");
-            else if (unitState & UNIT_STATE_ALL_STATE)
+            if (unitState & UNIT_STATE_ALL_STATE)
                 handler->PSendSysMessage("UNIT_STATE_ALL_STATE");
 
             return true;

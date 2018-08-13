@@ -266,7 +266,7 @@ public:
 
         char* pfactionid = handler->extractKeyFromLink((char*)args, "Hfaction");
 
-        Creature* target = handler->getSelectedCreature();
+        Unit* target = handler->getSelectedUnit();
         if (!target)
         {
             handler->SendSysMessage(LANG_SELECT_CREATURE);

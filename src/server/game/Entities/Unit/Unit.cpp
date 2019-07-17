@@ -16567,6 +16567,7 @@ void Unit::Kill(Unit* victim, bool durabilityLoss)
     {
         sLog->outStaticDebug("SET JUST_DIED");
         victim->setDeathState(JUST_DIED);
+		victim->InterruptSpline();
     }
 
     // 10% durability loss on death

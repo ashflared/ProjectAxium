@@ -370,7 +370,7 @@ void ObjectAccessor::Update(uint32 /*diff*/)
             for (Player* p : override_update_players)
             {
                 ModelOverride* mo = p->GetModelOverride();
-                override_packets.push_back(std::make_pair(mo->BuildOverridePacket(), std::make_pair(p->GetGUID(), mo->GetDisplayId())));
+                override_packets.push_back(std::make_pair(mo->BuildOverridePacket(), std::make_pair(p->GetGUIDLow(), mo->GetDisplayId())));
                 mo->SetModelChanged(false);
                 mo->SetNeedsUpdate(ModelOverride::UPDATETYPE_NO_UPDATE); // set to false
             }

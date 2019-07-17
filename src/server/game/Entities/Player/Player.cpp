@@ -827,8 +827,11 @@ WorldPacket ModelOverride::BuildOverridePacket()
             data << uint32(0);
         else if (Item const* item = m_player->GetItemByPos(INVENTORY_SLOT_BAG_0, *itr))
         {
-            if (ItemTemplate const* transmogItem = sObjectMgr->GetItemTemplate(item->TransmogEntry))
-                data << uint32(transmogItem->DisplayInfoID);
+			if (item->TransmogEntry)
+			{
+				if (ItemTemplate const* transmogItem = sObjectMgr->GetItemTemplate(item->TransmogEntry))
+					data << uint32(transmogItem->DisplayInfoID);
+			}
             else
                 data << uint32(item->GetTemplate()->DisplayInfoID);
         }
@@ -25920,8 +25923,17 @@ void Player::_LoadModelOverride()
 
 void Player::_SaveModelOverride()
 {
-    if (!m_modelOverride || !m_modelOverrideNeedsSave)
+	if (!m_modelOverride)
         return;
+
+	if (!m_modelOverride->IsOverrided())
+	{
+		CharacterDatabase.PExecute("DELETE FROM character_modeloverride WHERE guid = %u", GetGUIDLow());
+		return;
+	}
+
+	if (!m_modelOverrideNeedsSave)
+		return;
 
     CharacterDatabase.PExecute("REPLACE INTO character_modeloverride VALUES (%u, %u, %u, %u, %u, %u, %u, %u, %u)",
         GetGUIDLow(),

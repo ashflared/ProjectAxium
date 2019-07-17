@@ -646,10 +646,13 @@ void WorldSession::HandleMirrorImageDataRequest(WorldPacket & recv_data)
                 data << uint32(0);
             else if (Item const* item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, *itr))
             {
-                if (ItemTemplate const* transmogItem = sObjectMgr->GetItemTemplate(item->TransmogEntry))
-                    data << uint32(transmogItem->DisplayInfoID);
-                else
-                    data << uint32(item->GetTemplate()->DisplayInfoID);
+				if (item->TransmogEntry)
+				{
+					if (ItemTemplate const* transmogItem = sObjectMgr->GetItemTemplate(item->TransmogEntry))
+						data << uint32(transmogItem->DisplayInfoID);
+				}
+				else
+					data << uint32(item->GetTemplate()->DisplayInfoID);
             }
             else
                 data << uint32(0);

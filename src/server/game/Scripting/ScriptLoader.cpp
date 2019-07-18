@@ -40,7 +40,6 @@ void AddSC_ticket_commandscript();
 void AddSC_titles_commandscript();
 void AddSC_wp_commandscript();
 void AddSC_gps_commandscript();
-void AddSC_modeloverride_commandscript();
 void AddSC_morph_commandscript();
 void AddSC_utility_commandscript();
 void AddSC_group_commandscript();
@@ -137,7 +136,6 @@ void AddCommandScripts()
     AddSC_titles_commandscript();
     AddSC_wp_commandscript();
     AddSC_gps_commandscript();
-    AddSC_modeloverride_commandscript();
     AddSC_morph_commandscript();
     AddSC_utility_commandscript();
     AddSC_group_commandscript();

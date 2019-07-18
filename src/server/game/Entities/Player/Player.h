@@ -2605,7 +2605,6 @@ class Player : public Unit, public GridObject<Player>
         void SetSelectedTransmogItemSlot(uint8 slot) { m_selectedTransmogItemSlot = slot; }
 
         TransmogItemsSaveQueue transmogItemsSaveQueue;
-        TransmogSets transmogSets;
 
         ChallengeInformation challengeInfo;
 
@@ -2778,7 +2777,6 @@ class Player : public Unit, public GridObject<Player>
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
         void _LoadInstanceTimeRestrictions(PreparedQueryResult result);
-        void _LoadTransmogSets();
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -2801,7 +2799,6 @@ class Player : public Unit, public GridObject<Player>
         void _SaveStats(SQLTransaction& trans);
         void _SaveInstanceTimeRestrictions(SQLTransaction& trans);
         void _SaveTransmogItems();
-        void _SaveTransmogSets();
 
         void _SetCreateBits(UpdateMask* updateMask, Player* target) const;
         void _SetUpdateBits(UpdateMask* updateMask, Player* target) const;

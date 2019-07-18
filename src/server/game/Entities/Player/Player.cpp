@@ -851,7 +851,6 @@ Player::Player(WorldSession* session): Unit(true), m_achievementMgr(this), m_rep
 
     m_selectedTransmogItemSlot = 0;
     transmogItemsSaveQueue.clear();
-    transmogSets.clear();
 
     challengeInfo.ginfo = NULL;
 
@@ -17262,8 +17261,6 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
 
     _LoadEquipmentSets(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADEQUIPMENTSETS));
 
-    _LoadTransmogSets();
-
     m_vip = fields[68].GetBool();
 
     m_isFrozen = fields[69].GetBool();
@@ -18904,7 +18901,6 @@ void Player::SaveToDB(bool create /*=false*/)
         _SaveStats(trans);
 
     _SaveTransmogItems();
-    _SaveTransmogSets();
 
     CharacterDatabase.CommitTransaction(trans);
 
@@ -25670,42 +25666,6 @@ void Player::_SaveTransmogItems()
 
     transmogItemsSaveQueue.clear();
 }
-
-/*
-void Player::_LoadTransmogSets()
-{
-    QueryResult transmogSetsResult = CharacterDatabase.PQuery("SELECT MAX(setId) FROM character_transmog_sets WHERE guid = '%u'", GetGUIDLow());
-    if (!transmogSetsResult)
-        return;
-
-    uint8 amountOfTransmogSets = (*transmogSetsResult)[0].GetUInt8();
-
-    for (uint8 i = 0; i < amountOfTransmogSets; ++i)
-    {
-        QueryResult result = CharacterDatabase.PQuery("SELECT slot, itemId FROM character_transmog_sets WHERE setId = '%u' AND guid = '%u' ORDER BY slot ASC", i, GetGUIDLow());
-        if (!result)
-            continue;
-
-        TransmogSetItemMap transmogSetItems;
-
-        do
-        {
-            Field* fields = result->Fetch();
-            transmogSetItems[fields[0].GetUInt8()] = fields[1].GetUInt32();
-        }
-        while (result->NextRow());
-
-        transmogSets[i] = transmogSetItems;
-    }
-}
-
-void Player::_SaveTransmogSets()
-{
-    for (TransmogSets::iterator itr = transmogSets.begin(); itr != transmogSets.end(); ++itr)
-        for (TransmogSetItemMap::iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
-            CharacterDatabase.PQuery("REPLACE INTO character_transmog_sets (guid, setId, sort, itemId) VALUES ('%u', '%u', '%u', '%u')", GetGUIDLow(), itr->first, itr2->first, itr2->second);
-}
-*/
 
 bool Player::IsDamageSpec() const
 {

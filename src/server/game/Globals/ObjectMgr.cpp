@@ -8907,6 +8907,8 @@ void ObjectMgr::LoadExtendedCost2()
 
 bool ObjectMgr::CheckExtendedCost2(Player* player, const ItemTemplate* vItemTemplate)
 {
+    return true;
+
     if (player->HasGameMasterTagOn())
         return true;
 
